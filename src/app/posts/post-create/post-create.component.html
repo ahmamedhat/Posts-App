@@ -1,0 +1,33 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup] = "form" (submit)="onSavePost()" *ngIf="!isLoading">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Post Title"
+        formControlName = "title"
+      >
+      <mat-error *ngIf="form.get('title').invalid">You must enter a title</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="5"
+        placeholder="Post Body"
+        formControlName = "body"
+      ></textarea>
+      <mat-error *ngIf="form.get('body').invalid">You must enter a body</mat-error>
+    </mat-form-field>
+    <div>
+      <button mat-stroked-button type="button" (click)="inputButton.click()">
+        Add Image
+      </button>
+      <input type="file" #inputButton (change)="onUpload($event)">
+    </div>
+    <div class="image-container" *ngIf="imageFile !== '' && imageFile && form.valid">
+      <img [src]="imageFile" [alt]="form.value.title">
+    </div>
+    <button type="submit" color="accent" mat-raised-button>Save</button>
+  </form>
+</mat-card>
