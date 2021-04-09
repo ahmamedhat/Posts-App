@@ -74,11 +74,11 @@ export class PostCreateComponent implements OnInit{
     }
 
     if (this.mode === 0) {
-      const post:postModel = {id: null , title: this.form.value.title , body: this.form.value.body , imagePath: this.form.value.image};
+      const post:postModel = {id: null , title: this.form.value.title , body: this.form.value.body , imagePath: this.form.value.image , creatorId: null};
       this.postService.addPost(post);
     }
     else {
-      const post:postModel = {id: this.postId , title: this.form.value.title , body: this.form.value.body , imagePath: this.form.value.image};
+      const post:postModel = {id: this.postId , title: this.form.value.title , body: this.form.value.body , imagePath: this.form.value.image  , creatorId: null};
       this.postService.updatePost(this.postId , post , this.form.value.image);
     }
 

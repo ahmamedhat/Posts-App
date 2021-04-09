@@ -26,7 +26,8 @@ export class postService {
               title: post.title,
               body: post.body,
               id: post._id,
-              imagePath: post.imagePath
+              imagePath: post.imagePath,
+              creatorId: post.creatorId
             };
           });
         })
@@ -52,7 +53,7 @@ export class postService {
   }
 
   getPost (postId:string) {
-    return this.http.get<{title:string ; body:string ; id:string , imagePath: string}>('http://localhost:3000/api/posts/' + postId);
+    return this.http.get<{title:string ; body:string ; id:string , imagePath: string , creatorId: string}>('http://localhost:3000/api/posts/' + postId);
   }
 
   updatePost (postId:string , post: postModel , imagePath: File | string) {
@@ -69,7 +70,8 @@ export class postService {
         id: postId,
         title: post.title,
         body: post.body,
-        imagePath: imagePath
+        imagePath: imagePath,
+        creatorId: null
       }
     }
     this.http.put('http://localhost:3000/api/posts/' + postId , postData).subscribe(response => {

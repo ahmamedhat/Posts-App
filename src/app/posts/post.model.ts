@@ -3,4 +3,5 @@ export interface postModel {
   title:string;
   body:string;
   imagePath:string;
+  creatorId: string;
 }

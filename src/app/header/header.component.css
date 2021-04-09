@@ -3,9 +3,17 @@
   margin: 0%;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
 li {
   list-style: none;
   margin-left: 1.5rem;
+}
+
+.right-navbar-list {
+  display: flex;
 }
 
 a {
