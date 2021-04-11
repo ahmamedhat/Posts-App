@@ -1,6 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
+import { authService } from "src/app/auth/auth.service";
 import { postModel } from "../post.model";
 import { postService } from "../post.service";
 import { mimeType } from "./mime-type.validator";
@@ -11,20 +13,24 @@ import { mimeType } from "./mime-type.validator";
   styleUrls: ['./post-create.component.css']
 })
 
-export class PostCreateComponent implements OnInit{
+export class PostCreateComponent implements OnInit , OnDestroy{
   form: FormGroup;
   private mode = 0;
   private postId:string;
   post: postModel;
   isLoading = false;
   imageFile: string;
+  authServiceSub: Subscription;
 
 
-  constructor(private postService:postService , private router: ActivatedRoute) {
+  constructor(private postService:postService , private router: ActivatedRoute , private authService: authService) {
 
   }
 
   ngOnInit () {
+    this.authServiceSub = this.authService.getAuthenticationStatus().subscribe(() => {
+      this.isLoading = false;
+    });
     this.form = new FormGroup({
       title: new FormControl(null , { validators : [Validators.required , Validators.minLength(3)]}),
       body: new FormControl(null , {validators: Validators.required}),
@@ -84,6 +90,12 @@ export class PostCreateComponent implements OnInit{
 
     this.isLoading = true;
     this.form.reset();
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2500);
+  }
 
+  ngOnDestroy() {
+    this.authServiceSub.unsubscribe();
   }
 }

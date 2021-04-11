@@ -24,7 +24,7 @@ router.post("/signup", (req, res, next) => {
       })
       .catch((err) => {
         res.status(500).json({
-          message: "Failed To Create User",
+          message: "User Already Exists",
         });
       });
   });
@@ -36,7 +36,7 @@ router.post("/login", (req, res, next) => {
     .then((user) => {
       if (!user) {
         res.status(401).json({
-          message: "Login Failed",
+          message: "Invalid Authentication Credentials",
         });
       }
       userFound = user;
@@ -45,7 +45,7 @@ router.post("/login", (req, res, next) => {
     .then((result) => {
       if (!result) {
         res.status(401).json({
-          message: "Login Failed",
+          message: "Invalid Authentication Credentials",
         });
       }
       const token = jwt.sign(
@@ -64,7 +64,7 @@ router.post("/login", (req, res, next) => {
     })
     .catch(() => {
       res.status(401).json({
-        message: "Login Failed",
+        message: "Invalid Authentication Credentials",
       });
     });
 });

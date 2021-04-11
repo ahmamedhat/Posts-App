@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { user } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
-
 export class authService {
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -17,27 +16,41 @@ export class authService {
 
   onLogin(userData: user) {
     this.http
-      .post<{ token:string , expiresIn: number , userId: string }>(
+      .post<{ token: string; expiresIn: number; userId: string }>(
         'http://localhost:3000/api/user/login',
         userData
       )
-      .subscribe((response) => {
-        this.token = response.token;
-        if (this.token) {
-          this.setExpirationDate(response.expiresIn);
-          this.userId = response.userId;
-          const now = new Date();
-          this.saveAuthentication(this.token , new Date(now.getTime() + response.expiresIn) , this.userId);
-          this.isAuthenticatedListener.next(true);
-          this.isAuthenticated = true;
+      .subscribe(
+        (response) => {
+          this.token = response.token;
+          if (this.token) {
+            this.setExpirationDate(response.expiresIn);
+            this.userId = response.userId;
+            const now = new Date();
+            this.saveAuthentication(
+              this.token,
+              new Date(now.getTime() + response.expiresIn),
+              this.userId
+            );
+            this.isAuthenticatedListener.next(true);
+            this.isAuthenticated = true;
+          }
+        },
+        (error) => {
+          this.isAuthenticatedListener.next(false);
         }
-      });
+      );
   }
 
   onSignup(userData: user) {
-    this.http.post('http://localhost:3000/api/user/signup' , userData).subscribe(response => {
-      console.log(response);
-    });
+    this.http.post('http://localhost:3000/api/user/signup', userData).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        this.isAuthenticatedListener.next(false);
+      }
+    );
   }
 
   onLogout() {
@@ -53,7 +66,7 @@ export class authService {
   setExpirationDate(duration: number) {
     this.tokenTimer = setTimeout(() => {
       this.onLogout();
-    } , duration);
+    }, duration);
   }
 
   getToken() {
@@ -68,11 +81,10 @@ export class authService {
     return this.isAuthenticated;
   }
 
-  saveAuthentication(token: string , expirationDate: Date , userId: string) {
-    localStorage.setItem('token' , token);
-    localStorage.setItem('user' , userId);
-    localStorage.setItem('expires' , expirationDate.toISOString());
-
+  saveAuthentication(token: string, expirationDate: Date, userId: string) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', userId);
+    localStorage.setItem('expires', expirationDate.toISOString());
   }
 
   getAuthentication() {
@@ -83,7 +95,7 @@ export class authService {
     const authenticationInfo = {
       token: localStorage.getItem('token'),
       expires: new Date(localStorage.getItem('expires')),
-      userId: localStorage.getItem('user')
+      userId: localStorage.getItem('user'),
     };
     return authenticationInfo;
   }
@@ -111,5 +123,4 @@ export class authService {
   getUserId() {
     return this.userId;
   }
-
 }

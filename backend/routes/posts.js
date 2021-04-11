@@ -55,7 +55,9 @@ router.post(
         });
       })
       .catch((err) => {
-        console.log(err);
+        res.status(500).json({
+          message: "Failed to Create Post"
+        })
       });
   }
 );
@@ -87,7 +89,11 @@ router.put(
       else {
         res.status(401).json({message: 'UnAuthorized'});
       }
-    });
+    }).catch(error => {
+      res.status(500).json({
+        message: 'Failed to Updated Post'
+      })
+    })
   }
 );
 
@@ -109,7 +115,9 @@ router.get("", (req, res, next) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        res.status(500).json({
+          message: 'Failed to Fetch Posts!'
+        })
       });
   }
 });
@@ -123,7 +131,9 @@ router.get("/:id", (req, res, next) => {
         message: "Post not found",
       });
     }
-  });
+  }).catch(error => {
+    res.status(500).json({message: 'Failed to Fetch Post'})
+  })
 });
 
 router.delete("/:id", checkAuth, (req, res, next) => {
@@ -134,10 +144,10 @@ router.delete("/:id", checkAuth, (req, res, next) => {
         res.status(200).json({ message: "Succesfull Deletion" });
       }
       else {
-        res.status(401).json({message: 'UnAuthorized'});
+        res.status(401).json({message: 'Not Authorized'});
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json({message: 'Failed to Delete Post'}));
 });
 
 module.exports = router;
