@@ -1,9 +1,6 @@
 {
   "name": "mean-app",
   "version": "0.0.0",
-  "scripts": {
-    "nodemon": "nodemon ./backend/server.js"
-  },
   "engines": {
     "node": "12.19.0"
   },
