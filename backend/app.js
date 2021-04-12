@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 mongoose
   .connect(
-    "mongodb+srv://ahmad:miO3wJt4bw4Xmhjz@cluster0.l9btu.mongodb.net/posts?retryWrites=true&w=majority",
+    "mongodb+srv://ahmad:" + process.env.MONGO_ATLAS_PASS +"@cluster0.l9btu.mongodb.net/posts?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {})

@@ -1,0 +1,6 @@
+{
+  "env": {
+    "MONGO_ATLAS_PASS": "miO3wJt4bw4Xmhjz" ,
+    "JWT_KEY": "this-should-be-long-enough-for-security-reasons"
+  }
+}
