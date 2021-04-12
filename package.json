@@ -2,8 +2,8 @@
   "name": "mean-app",
   "version": "0.0.0",
   "scripts": {
+    "start": "SET MONGO_ATLAS_PASS=miO3wJt4bw4Xmhjz&& SET JWT_KEY=this-should-be-long-enough-for-security-reasons&& node ./backend/server.js",
     "ng": "ng",
-    "start": "SET MONGO_ATLAS_PASS=miO3wJt4bw4Xmhjz&& SET JWT_KEY=this-should-be-long-enough-for-security-reasons&& nodemon ./backend/server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

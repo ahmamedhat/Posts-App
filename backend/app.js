@@ -10,6 +10,7 @@ const userRoutes = require("./routes/user");
 app.use(express.json());
 app.use(bodyParser.json());
 
+
 mongoose
   .connect(
     "mongodb+srv://ahmad:" + process.env.MONGO_ATLAS_PASS +"@cluster0.l9btu.mongodb.net/posts?retryWrites=true&w=majority",
