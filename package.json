@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "SET MONGO_ATLAS_PASS=miO3wJt4bw4Xmhjz&& SET JWT_KEY=this-should-be-long-enough-for-security-reasons&& nodemon ./backend/server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

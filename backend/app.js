@@ -17,6 +17,7 @@ mongoose
   )
   .then(() => {})
   .catch((err) => {
+    console.log(process.env.MONGO_ATLAS_PASS)
     console.log("connection failed");
   });
 
